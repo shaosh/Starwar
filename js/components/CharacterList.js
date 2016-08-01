@@ -25,7 +25,7 @@ var CharacterList = React.createClass({
     if(characters && characters.length) {
       options = characters.map(function(character) {
         return (
-          <option value = {character.toLowerCase()}>{character}</option>
+          <option value = {character}>{character}</option>
         );
       });
     }
@@ -38,7 +38,7 @@ var CharacterList = React.createClass({
       );
     }
     else{
-      return(<p>Failed to load {id}</p>);
+      return(<p></p>);
     }
   }
 });

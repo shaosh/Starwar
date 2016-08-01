@@ -23,7 +23,8 @@ var Errors = keyMirror({
 });
 
 var Urls = {
-  SWAPI: 'http://graphql-swapi.parseapp.com/'
+  SWAPI: 'http://graphql-swapi.parseapp.com/',
+  SWAPI_PROXY: 'http://localhost:3000/swapiProxy'
 };
 
 var Queries = {
@@ -37,6 +38,9 @@ var Queries = {
           characters {
             name
             id
+            homeworld{
+              name
+            }
             species{
               name
               personConnection{

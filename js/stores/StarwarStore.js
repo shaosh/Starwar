@@ -55,9 +55,9 @@ var StarwarStore = assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   switch(action.actionType) {
     case StarwarConstants.Actions.SUCCESS_GET_DATA:
-      var result = action.result;
-      if(result && result.data){
-        data = result.data;
+      var result = JSON.parse(action.result);
+      if(result && result.allFilms){
+        data = result;
         StarwarStore.emitChange(StarwarConstants.Store.DISPLAY_DATA);
       }
       else{

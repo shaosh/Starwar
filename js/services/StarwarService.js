@@ -6,32 +6,22 @@
 require('../utils/StringHelper');
 
 var StarwarConstants = require('../constants/StarwarConstants');
-var Lokka = require('lokka').Lokka;
-var Transport = require('lokka-transport-http').Transport;
-var client = new Lokka({
-  transport: new Transport(StarwarConstants.Urls.SWAPI)
-});
 
 var request = require('request');
 
 var StarwarService = {
-  getData: (callback, query) => {
-    var vars = null;
-    var data = client.cache.getItemPayload(query, vars);
-    if(!data){
-      var url = StarwarConstants.Urls.SWAPI;
-      var options = {
-        url: url,
-        body: '"query":"' + query + '"'
-      };
-      request.defaults({'proxy':'http://graphql-swapi.parseapp.com'});
-      request.post(options, function(err, res, body){
-        console.log(err, res, body);
-      });
-    }
-    else{
-      callback(null, result);
-    }
+  getData: (callback) => {
+    request.get({url: StarwarConstants.Urls.SWAPI_PROXY}, function(err, res, body){
+      if(err){
+        callback(err, null);
+      }
+      else if(res.statusCode === 200){
+        callback(null, body);
+      }
+      else{
+        callback(res.statusCode, null);
+      }
+    });
   }
 };
 

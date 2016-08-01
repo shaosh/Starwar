@@ -32,8 +32,7 @@ var StarwarActions = {
   successGetData: function(result){
     var logData = [];
     if(result){
-      logData.push(['Results', result.Results]);
-      logData.push(['ErrorString', result.ErrorString]);
+      logData.push(['Results', result]);
     }
     Dispatcher.dispatch({
       actionType: StarwarConstants.Actions.SUCCESS_GET_DATA,
