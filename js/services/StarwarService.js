@@ -11,7 +11,8 @@ var request = require('request');
 
 var StarwarService = {
   getData: (callback) => {
-    request.get({url: StarwarConstants.Urls.SWAPI_PROXY}, function(err, res, body){
+    var url = StarwarConstants.Urls.SWAPI_PROXY + '?' + StarwarConstants.Queries.CHARACTER;
+    request.get({url: url}, function(err, res, body){
       if(err){
         callback(err, null);
       }

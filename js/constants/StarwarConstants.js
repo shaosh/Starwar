@@ -24,7 +24,7 @@ var Errors = keyMirror({
 
 var Urls = {
   SWAPI: 'http://graphql-swapi.parseapp.com/',
-  SWAPI_PROXY: 'http://localhost:3000/swapiProxy'
+  SWAPI_PROXY: 'http://localhost:3000/swapiProxy/'
 };
 
 var Queries = {

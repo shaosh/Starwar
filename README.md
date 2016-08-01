@@ -32,8 +32,6 @@ To integrate this component into your app, integrate the three lines below:
 
     <link rel="stylesheet" href="http://localhost:3000/css/app.css">
 
-    <section id="EasyAddrPlaceholder"></section>
+    <section id="StarwarPlaceholder"></section>
 
     <script src="http://localhost:3000/js/bundle.js"></script>
-
-To retrieve the address selected by user, you need to access the `value` property of `div#addrSelector`

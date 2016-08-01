@@ -2,6 +2,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
+var querystring = require('querystring');
 var baseDir = __dirname;
 
 var StarwarConstants = require('./js/constants/StarwarConstants');
@@ -13,14 +14,17 @@ var client = new Lokka({
 
 http.createServer(function (req, res) {
   try{
-    if(req.url === '/swapiProxy'){
-      GetDataFromSwapi(res);
+    var requestUrl = url.parse(req.url);
+    var pathname = path.normalize(requestUrl.pathname);
+    if(pathname.indexOf('swapiProxy') > -1){
+      var query = requestUrl.query;
+      if(query){
+        GetDataFromSwapi(res, unescape(query));
+      }
     }
     else{
-      var requestUrl = url.parse(req.url);
-      var fsPath = baseDir + path.normalize(requestUrl.pathname);
+      var fsPath = baseDir + pathname;
       res.writeHead(200);
-
       var fileStream = fs.createReadStream(fsPath);
       fileStream.pipe(res);
       fileStream.on('error',function(e) {
@@ -36,9 +40,8 @@ http.createServer(function (req, res) {
   }
 }).listen(3000);
 
-var GetDataFromSwapi = function(res){
+var GetDataFromSwapi = function(res, query){
   var vars = null;
-  var query = StarwarConstants.Queries.CHARACTER;
   var data = client.cache.getItemPayload(query, vars);
   if(!data){
     client.query(query).then(
@@ -55,7 +58,7 @@ var GetDataFromSwapi = function(res){
         }
       },
       function(error){
-        res.writeHead(500);
+        res.writeHead(502);
         res.end();
       }
     )

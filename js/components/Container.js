@@ -13,6 +13,8 @@ var StarwarActions = require('../actions/StarwarActions');
 const LIST1 = 'list1';
 const LIST2 = 'list2';
 
+var character1 = '';
+var character2 = '';
 var characterFilmMapping = {};
 
 var Container = React.createClass({
@@ -79,16 +81,15 @@ var Container = React.createClass({
   setCharacter: function(name, listid){
     if(name){
       if(listid === LIST1){
-        this.setState({character1: name});
+        character1 = name;
       }
       else if(listid === LIST2){
-        this.setState({character2: name});
+        character2 = name;
       }
     }
   },
 
   findFilmsInCommon: function(){
-    var {character1, character2} = this.state;
     if(character1 === character2){
       this.setState({ episodes:[], resultAreaText:'Please choose different characters.'});
       return;
@@ -115,7 +116,7 @@ var Container = React.createClass({
       }
     }
     var text = episodes.length ? '' : 'No films in common';
-    this.setState({episodes: episodes, resultAreaText: text});
+    this.setState({episodes: episodes, resultAreaText: text, character1: character1, character2: character2});
   },
 
   findFilmById: function(id, data){
