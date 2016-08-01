@@ -1,0 +1,48 @@
+{
+  "name": "starwar",
+  "version": "0.0.1",
+  "description": "",
+  "repository": "https://github.secureserver.net/sshao/",
+  "main": "js/app.js",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "flux": "^2.0.1",
+    "immutable": "^3.7.6",
+    "jsonp": "^0.2.0",
+    "keymirror": "~0.1.0",
+    "lokka": "^1.7.0",
+    "lokka-transport-http": "^1.4.0",
+    "node-cache": "^3.2.1",
+    "object-assign": "^1.0.0",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "browserify": "^6.2.0",
+    "envify": "^3.0.0",
+    "jest-cli": "^0.4.3",
+    "literalify": "^0.4.0",
+    "react-dom": "^15.1.0",
+    "reactify": "^0.15.2",
+    "uglify-js": "~2.4.15",
+    "watchify": "^2.1.1"
+  },
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d js/app.js",
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > js/bundle.min.js",
+    "test": "jest",
+    "server": "node server.js"
+  },
+  "author": "Shihuan Shao",
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  },
+  "jest": {
+    "rootDir": "./js"
+  }
+}

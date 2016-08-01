@@ -1,0 +1,67 @@
+/*
+ * Copyright (c) 2014-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * base.css overrides
+ */
+
+/**
+ * We are not changing from display:none, but rather re-rendering instead.
+ * Therefore this needs to be displayed normally by default.
+ */
+#addrSelector{
+    position:relative;
+    width:100%;
+}
+
+#addrBox {
+    display: block;
+    width: 100%;
+    height: 46px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#addrBox:focus {
+    border-color: #000000;
+    outline: 0;
+    background-color: #ffffff;
+}
+
+#addrList, #addFullFormReminder{
+    border: 1px solid #bebebe;
+    background-color: #fff;
+    width:100%;
+    z-index:9999;
+    position:absolute;
+}
+
+#addrList p{
+    margin: 0;
+    padding: 10px 5px;
+}
+
+#addrList p.highlight{
+    background-color: #bebebe;
+    cursor: pointer;
+}
+
+#addFullFormReminder p{
+    color: #3A5B9F;
+    cursor: pointer;
+    text-decoration: underline;
+}
