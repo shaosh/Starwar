@@ -69,7 +69,9 @@ var Container = React.createClass({
       }
       if(Object.keys(characterFilmMapping).length){
         var characterList = Object.keys(characterFilmMapping);
-        this.setState({characters: characterList, character1: characterList[0], character2: characterList[0]});
+        this.setState({characters: characterList});
+        character1 = characterList[0];
+        character2 = characterList[0];
       }
     }
   },
@@ -89,7 +91,7 @@ var Container = React.createClass({
     }
   },
 
-  findFilmsInCommon: function(){
+  findCoplayFilms: function(){
     if(character1 === character2){
       this.setState({ episodes:[], resultAreaText:'Please choose different characters.'});
       return;
@@ -107,10 +109,10 @@ var Container = React.createClass({
     var filmsList2 = characterFilmMapping[character2];
     var filmsIds1 = _.pluck(filmsList1, 'id');
     var filmsIds2 = _.pluck(filmsList2, 'id');
-    var filmsInCommon = _.intersection(filmsIds1, filmsIds2);
+    var filmsCoplay = _.intersection(filmsIds1, filmsIds2);
     var episodes = [];
-    for(var i = 0; i < filmsInCommon.length; i++){
-      var film = this.findFilmById(filmsInCommon[i], data);
+    for(var i = 0; i < filmsCoplay.length; i++){
+      var film = this.findFilmById(filmsCoplay[i], data);
       if(film){
         episodes.push(film);
       }
@@ -135,10 +137,10 @@ var Container = React.createClass({
     var {characters, error, character1, character2, episodes, resultAreaText} = this.state;
     return (
       <div id="starwarContainer" value="">
-        <div><p>{error}</p></div>
+        <div className="info"><p>{error}</p></div>
         <CharacterList id={LIST1} setCharacter={this.setCharacter} characters={characters}></CharacterList>
         <CharacterList id={LIST2} setCharacter={this.setCharacter} characters={characters}></CharacterList>
-        <button onClick={this.findFilmsInCommon}>Find Common Episode</button>
+        <button onClick={this.findCoplayFilms}>Find Common Episode</button>
         <ResultArea character1={character1} character2={character2} episodes={episodes} resultAreaText={resultAreaText}></ResultArea>
       </div>
     );

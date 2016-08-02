@@ -1,6 +1,6 @@
-# Address AutoComplete Component based on Flux
+# Star War Data Presentation based on Flux
 
-> An Address AutoComplete component that can be easily integrated into html page.
+> A simple app to present data of Star War films that can be easily integrated into html page.
 
 
 ## Running
@@ -12,7 +12,7 @@ From the root project directory run these commands from the command line:
 
 This will install all dependencies.
 
-To build the project, first run this command:
+To build the project and monitor for updates, first run this command:
 
     npm start
 

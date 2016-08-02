@@ -20,7 +20,7 @@ var ResultArea = React.createClass({
     var {character1, character2, episodes, resultAreaText} = this.props;
     var lis = '';
     if(resultAreaText){
-      return(<div>{resultAreaText}</div>);
+      return(<div className="info">{resultAreaText}</div>);
     }
     if(episodes && episodes.length) {
       lis = episodes.map(function(episode) {
@@ -31,9 +31,10 @@ var ResultArea = React.createClass({
     }
 
     if(lis.length){
-      return(
-        <div>
-          <p>{character1} and {character2} both appear in Films: </p>
+      var films = lis.length === 1 ? '1 film' : lis.length + ' films';
+  return(
+        <div id="result">
+          <p>{character1} and {character2} both appear in {films}: </p>
           <ul>
             {lis}
           </ul>

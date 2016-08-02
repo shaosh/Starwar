@@ -13,55 +13,33 @@
  * We are not changing from display:none, but rather re-rendering instead.
  * Therefore this needs to be displayed normally by default.
  */
-#addrSelector{
+#starwarContainer{
     position:relative;
     width:100%;
 }
 
-#addrBox {
-    display: block;
-    width: 100%;
-    height: 46px;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: normal;
-    line-height: 1.42857143;
-    color: #555555;
-    vertical-align: middle;
-    background-color: #ffffff;
-    border: 1px solid #bebebe;
-    border-radius: 3px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+select{
+    height: 40px;
+    margin-right:10px;
+    font-size: 15px;
 }
 
-#addrBox:focus {
-    border-color: #000000;
-    outline: 0;
-    background-color: #ffffff;
+option{
+    font-size:15px;
 }
 
-#addrList, #addFullFormReminder{
-    border: 1px solid #bebebe;
-    background-color: #fff;
-    width:100%;
-    z-index:9999;
-    position:absolute;
+div.info{
+    font-weight: bold;
+    color: red;
+    margin: 10px 0;
+    text-align: center;
 }
 
-#addrList p{
-    margin: 0;
-    padding: 10px 5px;
+#result{
+    margin: 10px;
+    font-size: 15px;
 }
 
-#addrList p.highlight{
-    background-color: #bebebe;
-    cursor: pointer;
-}
-
-#addFullFormReminder p{
-    color: #3A5B9F;
-    cursor: pointer;
-    text-decoration: underline;
+ul li{
+    font-size: 15px;
 }
