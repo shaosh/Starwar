@@ -9,7 +9,7 @@ var ns = {};
 
 ns.create = function(el, props){
   var outerRadius = props.outerRadius;
-  var innerRadius = outerRadius - 75;
+  var innerRadius = outerRadius - 130;
 
   var fill = d3.scale.category20c();
 
@@ -20,7 +20,7 @@ ns.create = function(el, props){
 
   var arc = d3.svg.arc()
     .innerRadius(innerRadius)
-    .outerRadius(innerRadius + 16);
+    .outerRadius(innerRadius + 20);
 
   var svg = d3.select(el).append("svg")
     .attr("width", outerRadius * 2)
@@ -60,7 +60,7 @@ ns._loadData = function(chord, svg, arc, innerRadius, fill, matrix, nameList){
     .attr("dy", ".35em")
     .attr("transform", function(d) {
       return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-        + "translate(" + (innerRadius + 15) + ")"
+        + "translate(" + (innerRadius + 26) + ")"
         + (d.angle > Math.PI ? "rotate(180)" : "");
     })
     .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })

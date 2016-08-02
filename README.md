@@ -35,3 +35,7 @@ To integrate this component into your app, integrate the three lines below:
     <section id="StarwarPlaceholder"></section>
 
     <script src="http://localhost:3000/js/bundle.js"></script>
+
+## Character Connections
+
+![character-connections-chord](http://github.com/shaosh/Starwar/blob/master/starwar.png)

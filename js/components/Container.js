@@ -13,7 +13,7 @@ var StarwarActions = require('../actions/StarwarActions');
 
 const LIST1 = 'list1';
 const LIST2 = 'list2';
-const CHORD_RADIUS = 300;
+const CHORD_RADIUS = 480;
 
 var character1 = '';
 var character2 = '';
