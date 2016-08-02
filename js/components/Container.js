@@ -12,10 +12,14 @@ var StarwarActions = require('../actions/StarwarActions');
 
 const LIST1 = 'list1';
 const LIST2 = 'list2';
+const COPLAYJSON = '../../data/coplay.json';
 
 var character1 = '';
 var character2 = '';
 var characterFilmMapping = {};
+var characterList = [];
+var coplayMapping = {};
+var coplayMatrix = [];
 
 var Container = React.createClass({
   getInitialState: function(){
@@ -48,6 +52,8 @@ var Container = React.createClass({
   onDisplayData: function(){
     var result = StarwarStore.getData();
     this.fulfillCharacterFilmMapping(result);
+    this.generateCoplayMapping();
+    this.generateMatrix();
   },
 
   fulfillCharacterFilmMapping: function(result){
@@ -68,7 +74,7 @@ var Container = React.createClass({
         }
       }
       if(Object.keys(characterFilmMapping).length){
-        var characterList = Object.keys(characterFilmMapping);
+        characterList = Object.keys(characterFilmMapping).sort();
         this.setState({characters: characterList});
         character1 = characterList[0];
         character2 = characterList[0];
@@ -91,6 +97,52 @@ var Container = React.createClass({
     }
   },
 
+  generateCoplayMapping: function(){
+    if(!Object.keys(characterFilmMapping).length){
+      return null;
+    }
+    if(!characterList.length){
+      characterList = Object.keys(characterFilmMapping).sort();
+    }
+    for(var i = 0; i < characterList.length; i++){
+      var obj = {};
+      var character1 = characterList[i];
+      for(var j = 0; j < characterList.length; j++){
+        var character2 = characterList[j];
+        if(i === j){
+          obj[character2] = 0;
+          continue;
+        }
+        var coplay = this.findCoplayFilms(character1, character2);
+        obj[character2] = coplay.length;
+      }
+      coplayMapping[character1] = obj;
+    }
+    console.log('coplayMapping', coplayMapping);
+    return coplayMapping;
+  },
+
+  generateMatrix: function(){
+    if(!Object.keys(coplayMapping).length || !Object.keys(characterFilmMapping).length){
+      return null;
+    }
+    if(!characterList.length){
+      characterList = Object.keys(characterFilmMapping).sort();
+    }
+    for(var i = 0; i < characterList.length; i++){
+      var character1 = characterList[i];
+      var obj = coplayMapping[character1];
+      var array = [];
+      for(var j = 0; j < characterList.length; j++){
+        var character2 = characterList[j];
+        array.push(obj[character2]);
+      }
+      coplayMatrix.push(array);
+    }
+    console.log('coplayMatrix', coplayMatrix);
+    return coplayMatrix;
+  },
+
   findCoplayFilms: function(){
     if(character1 === character2){
       this.setState({ episodes:[], resultAreaText:'Please choose different characters.'});
@@ -105,11 +157,7 @@ var Container = React.createClass({
       //TODO: differentiat componentDidMount and findFilmsBothCharactersAppear
     }
     var data = StarwarStore.getData();
-    var filmsList1 = characterFilmMapping[character1];
-    var filmsList2 = characterFilmMapping[character2];
-    var filmsIds1 = _.pluck(filmsList1, 'id');
-    var filmsIds2 = _.pluck(filmsList2, 'id');
-    var filmsCoplay = _.intersection(filmsIds1, filmsIds2);
+    var filmsCoplay = this.findCoplayFilms(character1, character2);
     var episodes = [];
     for(var i = 0; i < filmsCoplay.length; i++){
       var film = this.findFilmById(filmsCoplay[i], data);
@@ -119,6 +167,15 @@ var Container = React.createClass({
     }
     var text = episodes.length ? '' : 'No films in common';
     this.setState({episodes: episodes, resultAreaText: text, character1: character1, character2: character2});
+  },
+
+  findCoplayFilms: function(character1, character2){
+    var filmsList1 = characterFilmMapping[character1];
+    var filmsList2 = characterFilmMapping[character2];
+    var filmsIds1 = _.pluck(filmsList1, 'id');
+    var filmsIds2 = _.pluck(filmsList2, 'id');
+    var filmsCoplay = _.intersection(filmsIds1, filmsIds2);
+    return filmsCoplay;
   },
 
   findFilmById: function(id, data){
