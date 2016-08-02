@@ -38,4 +38,4 @@ To integrate this component into your app, integrate the three lines below:
 
 ## Character Connections
 
-![character-connections-chord](http://github.com/shaosh/Starwar/blob/master/starwar.png)
+![character-connections-chord](starwar.png)
