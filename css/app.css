@@ -16,6 +16,7 @@
 #starwarContainer{
     position:relative;
     width:100%;
+    text-align: center;
 }
 
 select{
@@ -38,8 +39,16 @@ div.info{
 #result{
     margin: 10px;
     font-size: 15px;
+    text-align: left;
+    width: 500px;
+    padding-left: 200px;
 }
 
 ul li{
     font-size: 15px;
+}
+
+.Chord{
+    margin-top: 50px;
+    text-align: center;
 }

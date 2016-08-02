@@ -5,6 +5,7 @@
 var React = require('react');
 var _ = require('underscore');
 var CharacterList = require('./CharacterList');
+var Chord = require('./Chord');
 var ResultArea = require('./ResultArea');
 var StarwarStore = require('../stores/StarwarStore');
 var StarwarConstants = require('../constants/StarwarConstants');
@@ -12,7 +13,7 @@ var StarwarActions = require('../actions/StarwarActions');
 
 const LIST1 = 'list1';
 const LIST2 = 'list2';
-const COPLAYJSON = '../../data/coplay.json';
+const CHORD_RADIUS = 300;
 
 var character1 = '';
 var character2 = '';
@@ -29,7 +30,8 @@ var Container = React.createClass({
       charcater2: '',
       error: '',
       episodes: [],
-      resultAreaText: ''
+      resultAreaText: '',
+      coplayMatrix: []
     };
   },
 
@@ -118,7 +120,6 @@ var Container = React.createClass({
       }
       coplayMapping[character1] = obj;
     }
-    console.log('coplayMapping', coplayMapping);
     return coplayMapping;
   },
 
@@ -139,11 +140,11 @@ var Container = React.createClass({
       }
       coplayMatrix.push(array);
     }
-    console.log('coplayMatrix', coplayMatrix);
+    this.setState({coplayMatrix: coplayMatrix});
     return coplayMatrix;
   },
 
-  findCoplayFilms: function(){
+  onClick: function(){
     if(character1 === character2){
       this.setState({ episodes:[], resultAreaText:'Please choose different characters.'});
       return;
@@ -191,14 +192,16 @@ var Container = React.createClass({
   },
 
   render: function(){
-    var {characters, error, character1, character2, episodes, resultAreaText} = this.state;
+    var {characters, error, character1, character2, episodes, resultAreaText, coplayMatrix} = this.state;
+    var chord = coplayMatrix.length && characterList.length ? (<Chord matrix={coplayMatrix} nameList={characterList} outerRadius={CHORD_RADIUS} ></Chord>) : (<div></div>);
     return (
       <div id="starwarContainer" value="">
         <div className="info"><p>{error}</p></div>
         <CharacterList id={LIST1} setCharacter={this.setCharacter} characters={characters}></CharacterList>
         <CharacterList id={LIST2} setCharacter={this.setCharacter} characters={characters}></CharacterList>
-        <button onClick={this.findCoplayFilms}>Find Common Episode</button>
+        <button onClick={this.onClick}>Find Common Episode</button>
         <ResultArea character1={character1} character2={character2} episodes={episodes} resultAreaText={resultAreaText}></ResultArea>
+        {chord}
       </div>
     );
   }

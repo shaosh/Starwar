@@ -32,7 +32,7 @@ var ResultArea = React.createClass({
 
     if(lis.length){
       var films = lis.length === 1 ? '1 film' : lis.length + ' films';
-  return(
+      return(
         <div id="result">
           <p>{character1} and {character2} both appear in {films}: </p>
           <ul>
