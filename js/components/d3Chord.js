@@ -45,10 +45,41 @@ ns._scales = function(el, domain){
 
 ns._loadData = function(chord, svg, arc, innerRadius, fill, matrix, nameList){
   chord.matrix(matrix);
+  var fade = function(opacity, i) {
+    svg.selectAll("path.chord")
+      .filter(function(d) {
+        return d.source.index != i && d.target.index != i;
+      })
+      .transition()
+      .style("opacity", opacity);
+  };
+
+  var showGroup = function(opacity, i){
+    svg.selectAll("path.chord")
+      .filter(function(d){
+        return d.source.index === i;
+      })
+      .transition()
+      .style("opacity", opacity);
+  };
+
+  var groups = chord.groups();
+  var chords = chord.chords();
+
+  console.log('groups', groups );
+  console.log('chords', chords );
+
   var g = svg.selectAll(".group")
     .data(chord.groups)
     .enter().append("g")
-    .attr("class", "group");
+    .attr("class", "group")
+    .on('mouseover', function(d, i){
+      fade(.01, i);
+      showGroup(1, d.index);
+    })
+    .on('mouseout', function(d, i){
+      fade(1, i)
+    });
 
   g.append("path")
     .style("fill", function(d) { return fill(d.index); })
@@ -72,7 +103,15 @@ ns._loadData = function(chord, svg, arc, innerRadius, fill, matrix, nameList){
     .attr("class", "chord")
     .style("stroke", function(d) { return d3.rgb(fill(d.source.index)).darker(); })
     .style("fill", function(d) { return fill(d.source.index); })
-    .attr("d", d3.svg.chord().radius(innerRadius));
+    .attr("d", d3.svg.chord().radius(innerRadius))
+    .on("mouseover", function(d, i){
+      fade(.01, i);
+      var currentEl = d3.select(this);
+      currentEl.style("opacity", 1);
+    })
+    .on("mouseout", function(d, i){
+      fade(1, i)
+    });
 };
 
 ns.destroy = function(el) {

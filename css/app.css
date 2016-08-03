@@ -48,7 +48,16 @@ ul li{
     font-size: 15px;
 }
 
-.Chord{
+div.Chord{
     margin-top: 50px;
     text-align: center;
 }
+
+path.chord {
+    fill-opacity: .67;
+}
+
+.group{
+    cursor: pointer;
+}
+

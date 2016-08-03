@@ -39,3 +39,7 @@ To integrate this component into your app, integrate the three lines below:
 ## Character Connections
 
 ![character-connections-chord](starwar.png)
+
+## Data Source
+
+    http://graphql-swapi.parseapp.com/
