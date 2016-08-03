@@ -3,7 +3,7 @@
 > A simple app to present data of Star War films that can be easily integrated into html page.
 
 
-## Running
+## Run
 
 You must have [npm](https://www.npmjs.org/) installed on your computer.
 From the root project directory run these commands from the command line:
@@ -41,7 +41,7 @@ To integrate this component into your app, integrate the three lines below:
 ![character-connections-chord](starwar.png)
 
 
-## Feature
+## Features
 
 1. Select characters in both selectors, it will display a list of films in which both characters appear, and this connection will be presented in the chord chart.
 2. Mouseover on a character, it will show all the characters who appear in the movie together with this character.
