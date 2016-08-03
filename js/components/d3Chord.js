@@ -7,7 +7,9 @@ var d3 = require('d3');
 
 var ns = {};
 
-ns.create = function(el, props){
+ns.svg = null;
+
+ns.create = function(el, props, state){
   var outerRadius = props.outerRadius;
   var innerRadius = outerRadius - 130;
 
@@ -22,63 +24,40 @@ ns.create = function(el, props){
     .innerRadius(innerRadius)
     .outerRadius(innerRadius + 20);
 
-  var svg = d3.select(el).append("svg")
+  this.svg = d3.select(el).append("svg")
     .attr("width", outerRadius * 2)
     .attr("height", outerRadius * 2)
     .append("g")
     .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
-  this._loadData(chord, svg, arc, innerRadius, fill, props.matrix, props.nameList);
+  this._loadData(chord, this.svg, arc, innerRadius, fill, props.matrix, props.nameList);
 
-  //var dispatcher = new EventEmitter();
+  var dispatcher = new EventEmitter();
   //this.update(el, state, dispatcher);
-  //
-  //return dispatcher;
+
+  return dispatcher;
 };
 
 ns.update = function(el, state, dispatcher){
-
-};
-
-ns._scales = function(el, domain){
-
+  if(state.source > -1 && state.target > -1){
+    this.highlightChord(state.source, state.target, this.svg);
+  }
 };
 
 ns._loadData = function(chord, svg, arc, innerRadius, fill, matrix, nameList){
   chord.matrix(matrix);
-  var fade = function(opacity, i) {
-    svg.selectAll("path.chord")
-      .filter(function(d) {
-        return d.source.index != i && d.target.index != i;
-      })
-      .transition()
-      .style("opacity", opacity);
-  };
 
-  var showGroup = function(opacity, i){
-    svg.selectAll("path.chord")
-      .filter(function(d){
-        return d.source.index === i;
-      })
-      .transition()
-      .style("opacity", opacity);
-  };
-
-  var groups = chord.groups();
-  var chords = chord.chords();
-
-  console.log('groups', groups );
-  console.log('chords', chords );
+  var that = this;
 
   var g = svg.selectAll(".group")
     .data(chord.groups)
     .enter().append("g")
     .attr("class", "group")
     .on('mouseover', function(d, i){
-      fade(.01, i);
-      showGroup(1, d.index);
+      that.fade(.01, i, svg);
+      that.showGroup(1, d.index, svg);
     })
     .on('mouseout', function(d, i){
-      fade(1, i)
+      that.fade(1, i, svg)
     });
 
   g.append("path")
@@ -105,13 +84,41 @@ ns._loadData = function(chord, svg, arc, innerRadius, fill, matrix, nameList){
     .style("fill", function(d) { return fill(d.source.index); })
     .attr("d", d3.svg.chord().radius(innerRadius))
     .on("mouseover", function(d, i){
-      fade(.01, i);
+      that.fade(.01, i, svg);
       var currentEl = d3.select(this);
       currentEl.style("opacity", 1);
     })
     .on("mouseout", function(d, i){
-      fade(1, i)
+      that.fade(1, i, svg)
     });
+};
+
+ns.highlightChord = function(source, target, svg){
+  this.fade(.01, -1, svg);
+  svg.selectAll("path.chord")
+    .filter(function(d, i) {
+      return d.source.index === source && d.target.index === target;
+    })
+    .transition()
+    .style("opacity", 1);
+};
+
+ns.fade = function(opacity, i, svg) {
+  svg.selectAll("path.chord")
+    .filter(function(d) {
+      return d.source.index != i && d.target.index != i;
+    })
+    .transition()
+    .style("opacity", opacity);
+};
+
+ns.showGroup = function(opacity, i, svg){
+  svg.selectAll("path.chord")
+    .filter(function(d){
+      return d.source.index === i;
+    })
+    .transition()
+    .style("opacity", opacity);
 };
 
 ns.destroy = function(el) {

@@ -40,6 +40,13 @@ To integrate this component into your app, integrate the three lines below:
 
 ![character-connections-chord](starwar.png)
 
+
+## Feature
+
+1. Select characters in both selectors, it will display a list of films in which both characters appear, and this connection will be presented in the chord chart.
+2. Mouseover on a character, it will show all the characters who appear in the movie together with this character.
+3. Mouseover on a specific chord, this chord will be highlighted.
+
 ## Data Source
 
     http://graphql-swapi.parseapp.com/

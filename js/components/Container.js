@@ -18,6 +18,7 @@ const CHORD_RADIUS = 480;
 var character1 = '';
 var character2 = '';
 var characterFilmMapping = {};
+var indexByCharacter = {};
 var characterList = [];
 var coplayMapping = {};
 var coplayMatrix = [];
@@ -109,6 +110,7 @@ var Container = React.createClass({
     for(var i = 0; i < characterList.length; i++){
       var obj = {};
       var character1 = characterList[i];
+      indexByCharacter[character1] = i;
       for(var j = 0; j < characterList.length; j++){
         var character2 = characterList[j];
         if(i === j){
@@ -193,7 +195,11 @@ var Container = React.createClass({
 
   render: function(){
     var {characters, error, character1, character2, episodes, resultAreaText, coplayMatrix} = this.state;
-    var chord = coplayMatrix.length && characterList.length ? (<Chord matrix={coplayMatrix} nameList={characterList} outerRadius={CHORD_RADIUS} ></Chord>) : (<div></div>);
+    var chordState = {
+      source: character1 ? indexByCharacter[character1] : -1,
+      target: character2 ? indexByCharacter[character2] : -1
+    };
+    var chord = coplayMatrix.length && characterList.length ? (<Chord matrix={coplayMatrix} nameList={characterList} outerRadius={CHORD_RADIUS} appState={chordState}></Chord>) : (<div></div>);
     return (
       <div id="starwarContainer" value="">
         <div className="info"><p>{error}</p></div>
