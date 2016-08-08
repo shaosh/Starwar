@@ -118,7 +118,7 @@ var Container = React.createClass({
           continue;
         }
         var coplay = this.findCoplayFilms(character1, character2);
-        obj[character2] = coplay.length;
+        obj[character2] = coplay.length < 3 ? 0 : coplay.length;
       }
       coplayMapping[character1] = obj;
     }
