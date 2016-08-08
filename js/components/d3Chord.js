@@ -43,9 +43,26 @@ ns.update = function(el, state, dispatcher){
   }
 };
 
+ns.removeNameOfEmptyGroup = function(matrix, nameList){
+  var newList = [];
+  for(var i = 0; i < matrix.length; i++){
+    var sum = 0;
+    for(var key in matrix[i]){
+      sum = sum + matrix[i][key];
+    }
+    if(sum === 0){
+      newList[i] = '';
+    }
+    else{
+      newList[i] = nameList[i];
+    }
+  }
+  return newList;
+};
+
 ns._loadData = function(chord, svg, arc, innerRadius, fill, matrix, nameList){
   chord.matrix(matrix);
-
+  nameList = this.removeNameOfEmptyGroup(matrix, nameList);
   var that = this;
 
   var g = svg.selectAll(".group")

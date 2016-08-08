@@ -65,7 +65,7 @@ var GetDataFromSwapi = function(res, query){
   }
   else{
     res.writeHead(200, { 'Content-Type': 'application/json', "Access-Control-Allow-Origin":"*" });
-    res.write(data);
+    res.write(JSON.stringify(data));
     res.end();
   }
 };

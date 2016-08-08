@@ -169,6 +169,9 @@ var Container = React.createClass({
       }
     }
     var text = episodes.length ? '' : 'No films in common';
+    if(episodes.length > 0 && episodes.length < 3){
+      text = 'Less than 3 films are ignored in chart';
+    }
     this.setState({episodes: episodes, resultAreaText: text, character1: character1, character2: character2});
   },
 
